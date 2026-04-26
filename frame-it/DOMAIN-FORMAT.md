@@ -55,7 +55,3 @@ _Avoid_: Client, buyer, account
 - **Lazy creation.** Don't generate `DOMAIN.md` until the first canonical term is resolved during a grilling session.
 - **Append on resolution.** When a new term is needed mid-session, write it to `DOMAIN.md` immediately so it's canonical for the rest of the session.
 - **Never delete entries.** If a term is deprecated, move it to a `## Deprecated` section with a one-line note pointing to its replacement.
-
-## Relationship to repo-level CONTEXT.md
-
-If a repo-level `CONTEXT.md` exists (from the `domain-model` skill), it is **not** the same file as `foundation/DOMAIN.md`. The repo's `CONTEXT.md` describes the codebase's bounded context; `foundation/DOMAIN.md` describes the foundation tree's language. They may overlap, diverge, or contradict — and that's fine. The skills in this set never read or write to repo-level files unless the user explicitly asks.

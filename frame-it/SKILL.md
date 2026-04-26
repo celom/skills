@@ -15,29 +15,30 @@ The artifact `frame-it` produces is a **baseline source-of-truth document** from
 
 A frame does not list features. It does not enumerate user stories. It does not describe implementation. It captures the load-bearing essence — the part of an idea you cannot tweak without breaking the whole thing.
 
-If the user wants a PRD → `write-a-prd`. An implementation plan → `prd-to-plan`. Tickets → `prd-to-issues`.
-
 ## What "hard-to-vary" means
 
-(After Deutsch — *The Beginning of Infinity*.) An explanation is **hard-to-vary** when every detail plays a functional role: you cannot swap or drop any part without ruining the whole. The opposite — easy-to-vary — is the language of corporate mission statements: *"We help teams ship faster"* survives any near-synonym substitution and means nothing.
+(After Deutsch — _The Beginning of Infinity_.) An explanation is **hard-to-vary** when every detail plays a functional role: you cannot swap or drop any part without ruining the whole. The opposite — easy-to-vary — is the language of corporate mission statements: _"We help teams ship faster"_ survives any near-synonym substitution and means nothing.
 
 This skill enforces hard-to-vary via five tests:
 
-| Test | Question | When applied |
-|---|---|---|
-| **Negation** | Could a reasonable competitor hold the opposite? | Inline during grilling |
-| **Specificity** | How many other ideas does this also describe? Aim for 1. | Inline during grilling |
-| **Substitution** | Swap key words for near-synonyms — does it still read fine? | Final tightening pass |
-| **Subtraction** | Remove a clause — does the essence still work? | Final tightening pass |
-| **Falsifier** | What observable evidence would prove this wrong? | Required, written into artifact |
+| Test             | Question                                                    | When applied                    |
+| ---------------- | ----------------------------------------------------------- | ------------------------------- |
+| **Negation**     | Could a reasonable competitor hold the opposite?            | Inline during grilling          |
+| **Specificity**  | How many other ideas does this also describe? Aim for 1.    | Inline during grilling          |
+| **Substitution** | Swap key words for near-synonyms — does it still read fine? | Final tightening pass           |
+| **Subtraction**  | Remove a clause — does the essence still work?              | Final tightening pass           |
+| **Falsifier**    | What observable evidence would prove this wrong?            | Required, written into artifact |
 
 ## Input modes
 
 The skill detects the mode by inspecting the input:
 
-- **Mode A — no path given.** User describes the topic conversationally. Output goes to `./foundation/FRAME.md` by default (ask if a different location is wanted).
-- **Mode B — path to a non-frame-shaped doc** (an existing PRD, essay, notes, anything). Treat as **read-only source material**. Grill around it, distill an essence, ask where to write the output (default `./foundation/FRAME.md`).
-- **Mode C — path to an existing frame-shaped node** (has the required frontmatter and Carves/Falsifier lines per `NODE-FORMAT.md`). Re-grill in place. Load the existing essence as the starting point. Show a diff before writing.
+- **Mode A — new node from chat.** No path given. User describes the topic conversationally.
+  - Default: a new root node at `./foundation/FRAME.md`.
+  - If the user wants this to be a child of an existing frame-shaped node, ask for (or accept) the parent path. Output goes into the parent's children directory per the path scheme in `../layer-it/SKILL.md` (step 1). The new file is created with `status: grilled` and its `Parent:` link points back to the parent file. The parent itself is **not modified** — children are discovered via the directory layout.
+- **Mode B — non-frame-shaped source.** Path to a PRD, essay, notes, or any unstructured doc. Treat as **read-only source material**. Grill around it, distill an essence, ask where to write the output (default `./foundation/FRAME.md`).
+- **Mode C — re-grill in place.** Path to an existing frame-shaped node (frontmatter + Carves/Falsifier per `NODE-FORMAT.md`). Load the existing essence as the starting point. Show a diff before writing.
+  - If the node carries `status: stub`, this is a **graduation**: flip to `status: grilled` on write. Stubs are typically created by `layer-it`; graduating one is just Mode C with a status flip — no separate flow.
 
 ## Workflow
 
@@ -50,12 +51,12 @@ The skill detects the mode by inspecting the input:
 
 ### 2. Essence grill (interactive)
 
-Open with: *"What's the essence here? What's the part you can't tweak without ruining the whole?"*
+Open with: _"What's the essence here? What's the part you can't tweak without ruining the whole?"_
 
 Iterate on drafts. As candidates emerge, **apply two tests inline**:
 
-- **Negation.** *"Could a reasonable competitor hold the opposite of what you just said? If not, that's a sign it's vacuous."*
-- **Specificity.** *"Could this same sentence also describe [other plausible project]? If yes, what's specific to this one?"*
+- **Negation.** _"Could a reasonable competitor hold the opposite of what you just said? If not, that's a sign it's vacuous."_
+- **Specificity.** _"Could this same sentence also describe [other plausible project]? If yes, what's specific to this one?"_
 
 If the user uses a domain term that conflicts with an existing entry in `DOMAIN.md`, **stop immediately** and surface the conflict. Don't paper over it.
 
@@ -63,19 +64,22 @@ If a new canonical term is needed, append it to `DOMAIN.md` **now** — not at e
 
 ### 3. Falsifier grill
 
-Once an essence holds, ask: *"What observable evidence would prove this is wrong?"*
+Once an essence holds, ask: _"What observable evidence would prove this is wrong?"_
 
 Push until the answer is concrete and observable.
+
 - ❌ "Users wouldn't like it."
 - ✅ "Fewer than 10% of trial users return for a second session within a week."
 
-If the user can't produce a falsifier, the essence isn't taking a position. Loop back to step 2.
+If the user can't produce a falsifier, the essence likely isn't taking a position — loop back to step 2.
+
+**Escape hatch — distinguishers.** Some framings (design philosophies, research directions, personal essays) genuinely don't take an empirically falsifiable position. In that case, accept a **distinguisher** instead: a concrete situation where this essence would lead to a different decision than its plausible alternatives. Write it on the `Falsifier:` line prefixed with `(distinguisher)` so future readers can tell it apart from a true falsifier. Don't reach for this escape hatch by default — only when an honest attempt at falsification fails.
 
 ### 4. Carves grill (only if not root)
 
-If this node has a parent (it's not the root `FRAME.md`), ask:
+If this node has a parent (Mode A with a parent specified, or Mode B/C where the file lives below `./foundation/FRAME.md`), ask:
 
-> *"What slice of the parent does this node own that no sibling does? Why is this one of the parent's pillars and not redundant with another?"*
+> _"What slice of the parent does this node own that no sibling does? Why is this one of the parent's pillars and not redundant with another?"_
 
 The answer becomes the **Carves:** line. For the root, this line reads `(root)`.
 
@@ -83,10 +87,11 @@ The answer becomes the **Carves:** line. For the root, this line reads `(root)`.
 
 Apply the line-edit tests to the working essence:
 
-- **Substitution.** For each key noun/verb, propose two near-synonyms. Read the sentence with each. If any reads fine, that word wasn't load-bearing — replace it with one that is, or strengthen the surrounding context.
+- **Substitution.** For each key noun/verb, propose two near-synonyms and read the sentence with each. If any version reads fine, the original word wasn't load-bearing. Either drop the word, or replace it with the specific concept the slot actually demands (and promote that concept to `DOMAIN.md` if it's a domain term).
 - **Subtraction.** Strike each clause in turn. If the essence still holds without it, drop it.
 
 Then run the **DOMAIN.md conformance check**. Every domain noun in the artifact must be:
+
 - (a) an existing canonical term in `DOMAIN.md`,
 - (b) common English not specific to this project, or
 - (c) a term promoted to canonical in this session.
@@ -99,19 +104,11 @@ No floating non-canonical terms.
 - For **Mode C**, show a diff against the existing artifact.
 - Ask for explicit confirmation before writing.
 - Write the file following the template in `NODE-FORMAT.md`.
-- If this is a fresh non-root node and the parent file is known, **update the parent's `Children:` link** to include this new node.
+- If this is a fresh non-root node, set the new file's `Parent:` link to the parent's relative path. **Do not mutate the parent file** — children are discovered via the directory layout, not a `Children:` index.
 - Verify any new canonical terms made it into `DOMAIN.md` (they should already be appended from step 2).
-
-## Composing with layer-it
-
-`layer-it` may invoke this skill's process to **graduate a stubbed pillar** from `status: stub` to `status: grilled`. When invoked in that mode:
-
-- Skip the file-creation step (the file already exists as a stub).
-- Run steps 1–6 in place, treating the stub's existing content as the Mode C starting point.
-- On write, flip `status: stub` → `status: grilled`.
 
 ## Boundaries
 
 - **Never delete files.** If a re-grill fundamentally changes the essence, the prior version lives in git history.
 - **Don't scan the repository unless the user asks.** This skill operates inside `foundation/` only. If the user explicitly says "check this against the codebase" or names files outside `foundation/`, follow that instruction; otherwise, don't.
-- **Don't write outside `foundation/`** (or wherever the user designates as the foundation root). Source material in Mode B is **read-only**.
+- **Don't write outside `foundation/`.** Source material in Mode B is **read-only**.

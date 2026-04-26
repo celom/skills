@@ -21,7 +21,6 @@ status: stub | grilled
 - {how this node tightens or constrains another sibling}
 
 > Parent: {relative link to parent .md file, or `root`}
-> Children: {comma-separated relative links to children, or `none yet`}
 ````
 
 ## Field rules
@@ -32,7 +31,7 @@ status: stub | grilled
 - **Carves** — required on every non-root node. The justification for this node's *existence* as a sibling. If you can't write this line, the node shouldn't exist as a separate pillar.
 - **Falsifier** — required on every node. Concrete and observable. *"Users wouldn't like it"* is not a falsifier; *"fewer than 10% return within a week"* is. Stubs created by `layer-it` may carry the placeholder `(to be defined when graduated)` — `frame-it` fills it in during graduation.
 - **Tensions** — optional. Surface only if a real sibling-level relationship matters (e.g. one pillar tightens or constrains another). If the section feels speculative, remove it entirely.
-- **Parent / Children** — relative file paths. Auto-maintained by `frame-it` (on write of a fresh node) and `layer-it` (on every write — create / revise / drop).
+- **Parent** — relative path to the parent `.md` file, or `root`. Set on the child at write time. **The parent is never mutated to track its children** — to enumerate a node's children, list the files in the sibling directory (per the path scheme in `../layer-it/SKILL.md` step 1), excluding anything under `_deprecated/`. This avoids write amplification on the parent (the most load-bearing file in the tree) and removes the risk of a stale child index drifting from the filesystem.
 
 ## Length
 
