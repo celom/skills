@@ -1,6 +1,6 @@
 # Frame-shaped node format
 
-Every artifact in a `foundation/` tree — the root `FRAME.md` and every pillar at every depth — follows this shape. The uniformity is what makes recursion clean: any node can be re-grilled (`frame-it`) or decomposed (`layer-it`) without special-casing depth.
+> **Shared contract.** This file defines the artifact shape used by both `frame-it` and `layer-it`. Every node in a `foundation/` tree — the root `FRAME.md` and every pillar at every depth — follows it. The uniformity is what makes recursion clean: any node can be re-grilled (`frame-it`) or decomposed (`layer-it`) without special-casing depth.
 
 ## Template
 
@@ -17,9 +17,6 @@ status: stub | grilled
 
 **Falsifier:** {one line — what observable evidence would prove this essence is wrong}
 
-**Tensions:** {optional — only when meaningful sibling relationships exist}
-- {how this node tightens or constrains another sibling}
-
 > Parent: {relative link to parent .md file, or `root`}
 ````
 
@@ -30,8 +27,7 @@ status: stub | grilled
 - **Essence paragraph** — *the* artifact. Hard-to-vary. Every domain term canonical per `DOMAIN.md`. No filler, no jargon-for-jargon's-sake.
 - **Carves** — required on every non-root node. The justification for this node's *existence* as a sibling. If you can't write this line, the node shouldn't exist as a separate pillar.
 - **Falsifier** — required on every node. Concrete and observable. *"Users wouldn't like it"* is not a falsifier; *"fewer than 10% return within a week"* is. Stubs created by `layer-it` may carry the placeholder `(to be defined when graduated)` — `frame-it` fills it in during graduation.
-- **Tensions** — optional. Surface only if a real sibling-level relationship matters (e.g. one pillar tightens or constrains another). If the section feels speculative, remove it entirely.
-- **Parent** — relative path to the parent `.md` file, or `root`. Set on the child at write time. **The parent is never mutated to track its children** — to enumerate a node's children, list the files in the sibling directory (per the path scheme in `../layer-it/SKILL.md` step 1), excluding anything under `_deprecated/`. This avoids write amplification on the parent (the most load-bearing file in the tree) and removes the risk of a stale child index drifting from the filesystem.
+- **Parent** — relative path to the parent `.md` file, or `root`. Set on the child at write time. **The parent is never mutated to track its children** — to enumerate a node's children, list the files in the sibling directory (per the path scheme in `../layer-it/SKILL.md`), excluding anything under `_deprecated/`. This avoids write amplification on the parent (the most load-bearing file in the tree) and removes the risk of a stale child index drifting from the filesystem.
 
 ## Length
 

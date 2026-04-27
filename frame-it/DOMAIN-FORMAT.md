@@ -1,5 +1,7 @@
 # DOMAIN.md format
 
+> **Shared contract.** This file defines the glossary spec used by both `frame-it` and `layer-it`. `frame-it` promotes new canonical terms; `layer-it` follows the existing language and queues new terms for graduation.
+
 `DOMAIN.md` is the **canonical lingua franca** of one foundation tree. Every essence in the tree must conform to it. Specs, PRDs, plans, and any downstream artifact built from this foundation should also inherit the language defined here.
 
 It lives at `./foundation/DOMAIN.md`. There is **one** `DOMAIN.md` per foundation tree — no `DOMAIN-MAP.md`, no per-pillar variants. If a project genuinely needs two domain languages, it has two foundation trees.
