@@ -2,6 +2,8 @@
 name: frame
 description: Frame a product idea into a concise anchor doc, branching sub-topics into focused folders for separate sessions. Use when the user invokes /frame or wants to sediment scope without losing focus to non-load-bearing noise.
 disable-model-invocation: true
+metadata:
+  - based-on: grill-with-docs (Matt Pocock)
 ---
 
 Interview me relentlessly about every aspect of this idea until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies one-by-one. For each question, provide your recommended answer.
