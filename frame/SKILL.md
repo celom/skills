@@ -35,12 +35,12 @@ Opinionated default. Sections may be dropped when they don't earn their keep —
 
 ## File system
 
-Default root: `~/framing/<slug>/`. User can override with a path argument.
+Default root: `~/docs/framing/<slug>/`. User can override with a path argument.
 
 Self-named anchor at each level. Leaf-as-file, branched-as-folder:
 
 ```
-~/framing/some-product/
+~/docs/framing/some-product/
   some-product.md           ← root anchor
   pricing.md                ← leaf branch
   onboarding/               ← branched sub-topic
@@ -62,7 +62,7 @@ Section ordering during the grill is fully opportunistic, including the One-line
 **No file is written before the One-liner is good enough to slug on.** Until then, all material is held in conversation. Once the One-liner crystallizes:
 
 1. Propose a slug, confirm.
-2. Create `~/framing/<slug>/<slug>.md`.
+2. Create `~/docs/framing/<slug>/<slug>.md`.
 3. Dump in-memory material into the appropriate sections.
 4. Continue iteratively — sections crystallize, write immediately. No batching.
 
