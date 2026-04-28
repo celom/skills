@@ -6,11 +6,9 @@ metadata:
   - based-on: grill-with-docs (Matt Pocock)
 ---
 
-Interview me relentlessly about every aspect of this idea until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies one-by-one. For each question, provide your recommended answer.
+Explore this idea relentlessly — clarify the angles that aren't yet named, surface blind spots, and uncover insights the user wouldn't reach alone. Stay circumscribed to this node's scope; queue branches for what belongs elsewhere.
 
-Ask the questions one at a time, waiting for feedback before continuing.
-
-If a question can be answered by exploring existing material, explore instead.
+Ask one question at a time, with a recommended answer, and wait for feedback. If a question can be answered by reading existing material, read instead.
 
 ## Invocation
 
@@ -57,7 +55,9 @@ Slug is kebab-case, derived from the crystallized One-liner. Skill proposes; use
 
 ## Process
 
-Section ordering during the grill is fully opportunistic, including the One-liner. Probe wherever the user has heat.
+The grill is for exploration, not resolution. Probe where there's heat, name what's missing, stop when the material is enough to act — not when every angle is closed.
+
+Section ordering during the grill is fully opportunistic, including the One-liner.
 
 **No file is written before the One-liner is good enough to slug on.** Until then, all material is held in conversation. Once the One-liner crystallizes:
 
@@ -70,9 +70,9 @@ On re-invocation against an existing file: always resume. Read existing content,
 
 ## Branching
 
-Trigger a branch when:
+Branching keeps each node's exploration circumscribed — the parent stays focused, the child gets its own session. Trigger a branch when:
 
-- The trunk starts to bloat around a topic that deserves its own focus.
+- A topic starts pulling the trunk away from the current node's scope.
 - The user explicitly asks to branch.
 - The end-of-session pass catches something missed.
 
