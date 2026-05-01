@@ -1,142 +1,64 @@
 ---
 name: frame
-description: Frame a product idea into a concise anchor doc, branching sub-topics into focused folders for separate sessions. Use when the user invokes /frame or wants to sediment scope without losing focus to non-load-bearing noise.
+description: Distill an idea through a relentless one-question-at-a-time discovery process. Each scope becomes its own artifact under docs/frame/, with a shared glossary in DOMAIN.md. Use when the user has a thought, idea, or proposal that needs sharpening before it can be acted on.
 disable-model-invocation: true
 metadata:
   - based-on: grill-with-docs (Matt Pocock)
 ---
 
-Explore this idea relentlessly — clarify the angles that aren't yet named, surface blind spots, and uncover insights the user wouldn't reach alone. Stay circumscribed to this node's scope; queue branches for what belongs elsewhere.
+# Frame
 
-Ask one question at a time, with a recommended answer, and wait for feedback. If a question can be answered by reading existing material, read instead.
+Distill an idea by resolving the dependencies between decisions, one at a time, until shared understanding is reached. Each domain scope produces its own artifact under `docs/frame/`. A shared glossary, `DOMAIN.md`, captures the language as it stabilizes.
 
-## Invocation
+## Tone
 
-`/frame [arg]`:
+Skeptical editor. Do not validate, encourage, or soften.
 
-- `@<path>` — focused re-entry on that file (resume).
-- Free-form text — seed for a new root grill.
-- No argument — ask the user to describe the idea.
-- Ambiguous — ask.
-
-## Artifact
-
-The framing doc uses the scaffold defined in [FRAMING-FORMAT.md](./FRAMING-FORMAT.md). Five sections, recursively applied at every level:
-
-1. One-liner
-2. Problem
-3. Mechanism
-4. Insight
-5. Out-of-scope
-
-Opinionated default. Sections may be dropped when they don't earn their keep — but resist drops made out of laziness, not honest scope.
-
-## File system
-
-Default root: `./docs/framing/<slug>/`. User can override with a path argument.
-
-Self-named anchor at each level. Leaf-as-file, branched-as-folder:
-
-```
-./docs/framing/some-product/
-  some-product.md           ← root anchor
-  pricing.md                ← leaf branch
-  onboarding/               ← branched sub-topic
-    onboarding.md           ← anchor at this level
-    welcome-flow.md
-    verification/           ← branched further
-      verification.md
-      mfa.md
-```
-
-When a leaf gains its own branches, convert it: `pricing.md` → `pricing/pricing.md`, then drop new siblings inside that folder.
-
-Slug is kebab-case, derived from the crystallized One-liner. Skill proposes; user confirms or overrides.
-
-## Pre-grill framing
-
-Before grilling, restate the user's input as a short framing block — your read of what they're proposing, in your own words. Surfaces assumptions before energy is spent grilling the wrong thing.
-
-- 2–4 sentences, free prose. No 5-section scaffold yet.
-- Name explicit gaps ("not stated: who the user is").
-- End with: "Does this match? Correct anything off."
-
-Iterate until the user confirms. Only then start the grill.
-
-Skip on focused re-entry (`/frame @<path>`) — the existing file is the framing.
-
-If the input is too thin to frame at all, ask one anchoring question first, then produce the framing block from the answer.
-
-## Prior features (product / app / website only)
-
-After the framing is confirmed, if the idea is product-shaped, ask once: "Any features you've already been thinking about? Drop them in if you want them in the mix — the grill will sort what's load-bearing."
-
-- Skip if the framing isn't product-shaped (strategy, research, process, etc.).
-- Skip on focused re-entry — that context already lives in the file.
-- Treat what the user dumps as candidates, not commitments. The grill still probes them, prunes what's noise, queues sub-topics as branches.
+- No "great starting point", no "interesting direction", no "good question".
+- If something is unclear, say it's unclear.
+- If two things the user said contradict, quote both back verbatim: _Earlier: "X". Now: "Y". Which is it?_
+- If a claim is unsupported, ask what evidence backs it. "It feels right" is not evidence.
+- Push back on fuzzy or overloaded terms. Propose a precise canonical term and force the user to pick.
+- When the user uses a term that conflicts with `DOMAIN.md`, call it out before letting the conversation move on.
 
 ## Process
 
-The grill is for exploration, not resolution. Probe where there's heat, name what's missing, stop when the material is enough to act — not when every angle is closed.
+1. **One question per turn.** Ask the question, state your recommended answer, wait. Never stack two questions. Never accept a batched answer to questions you didn't ask.
+2. **Resolve dependencies first.** Identify the decision the rest of the discussion hangs on. Resolve it before its dependents. If two questions are mutually dependent, name the loop and pick the one to break it on.
+3. **One scope per artifact.** When a tangent has its own decisions to make, it earns its own frame. Note it as an unresolved question on the parent — don't derail the parent scope to chase it. Once that question is grilled into its own child frame, remove it from the parent: the child frame is now where it lives, and the parent shouldn't carry a stale pointer.
+4. **Concrete scenarios over abstractions.** When relationships are being asserted, invent a scenario that probes the boundary. _"A Customer cancels mid-checkout — does that produce an Invoice or not?"_ Force the user to be precise.
+5. **Capture as you go.** When a term is resolved, update `DOMAIN.md` immediately. When a section of the current frame crystallizes, write it. No batching.
+6. **Lazy writes.** Hold material in conversation until there is something concrete to write. Only then create the file.
 
-Section ordering during the grill is fully opportunistic, including the One-liner.
+## File structure
 
-**No file is written before the One-liner is good enough to slug on.** Until then, all material is held in conversation. Once the One-liner crystallizes:
+```
+docs/frame/
+├── DOMAIN.md
+├── 000-<root-slug>.md
+├── 001-<child-slug>.md
+├── 001-<child-slug>/          ← only created when 001 itself spawns children
+│   ├── 001-<grandchild>.md
+│   └── 002-<grandchild>.md
+└── 002-<other-child>.md
+```
 
-1. Propose a slug, confirm.
-2. Create `./docs/framing/<slug>/<slug>.md`.
-3. Dump in-memory material into the appropriate sections.
-4. Continue iteratively — sections crystallize, write immediately. No batching.
+- Numbering is zero-padded and scoped to each level. Root is `000-`. Direct children of the root start at `001-`. Each subfolder restarts at `001-`.
+- A frame doc gains children by creating a sibling folder with the same slug. The original `.md` stays put; children live in the folder next to it.
+- Slug is kebab-case, derived from the resolved one-liner. Propose, confirm, then create.
+- See [FRAMING-FORMAT.md](./FRAMING-FORMAT.md) for the per-document format.
 
-On re-invocation against an existing file: always resume. Read existing content, treat as in-progress, bias questions toward gaps and tensions.
+### Lazy creation
 
-## Branching
+- Don't create `docs/frame/` until the first frame doc is ready to be written.
+- Don't create `DOMAIN.md` until the first domain term is resolved.
+- Don't create empty folders or stub files for queued sub-topics. A queued sub-topic is a one-line note on the parent frame, not a placeholder file.
 
-Branching keeps each node's exploration circumscribed — the parent stays focused, the child gets its own session. Trigger a branch when:
+## Glossary management (DOMAIN.md)
 
-- A topic starts pulling the trunk away from the current node's scope.
-- The user explicitly asks to branch.
-- The end-of-session pass catches something missed.
+`DOMAIN.md` is the shared language. Format defined in [DOMAIN-FORMAT.md](./DOMAIN-FORMAT.md).
 
-Mechanic — **queue, never stack**:
-
-1. Create the new file at the right level (leaf, or convert a leaf to a folder per the FS rules).
-2. Write a single line at the top: `Spawned from: <one-sentence reason>`.
-3. Continue grilling the parent.
-
-The branch is grilled later in a fresh `/frame @<path>` session.
-
-## Focused sub-session re-entry
-
-When `/frame @<path>` is invoked on a non-root file:
-
-- Read the file (including the trigger note if still present).
-- Walk up the directory tree and read each ancestor's self-named anchor.
-- **Do not** enumerate siblings. **Do not** descend into children. The folder topology is the source of truth, but loading it back in defeats the zoned mindset.
-
-First action of a focused session: internalize the trigger note, then **replace it** with the One-liner once that crystallizes for this sub-topic.
-
-## Cross-level edits
-
-A focused session may propose edits to ancestor files when an insight genuinely changes them. Always surface the proposed edit and require confirmation. Never silently mutate ancestors. No auto-revisit of the parent at end of session.
-
-## End condition
-
-Stop when the user says done. Then do one explicit pass over empty sections — for each, ask once: drop it or fill it. Respect the answer.
-
-No polish pass.
-
-The framing doc is a valid downstream input to `/to-prd` and `/spec-driven-development`, but invoking those is the user's call. Closing message: name the file path. That's it.
-
-## Failure modes
-
-- Writing to disk before the One-liner has crystallized.
-- Loading siblings or descendants during focused re-entry.
-- Automatic handoff to downstream skills.
-- Polish pass after iterative writing.
-- Silent ancestor mutation from a focused session.
-- Premature scaffold filling in queued branch files (anything beyond the trigger note).
-- Marching through sections in a fixed order instead of grilling where the user has heat.
-- Creating empty placeholder folders before there is anything to put in them.
-- Skipping the framing block and grilling on an unconfirmed read of the input.
-- Treating prior features as commitments — skipping the probe and letting half-baked ideas anchor the Mechanism.
+- **Challenge against the glossary.** When the user uses a term that conflicts with an existing entry, stop and resolve it. _"Your glossary defines 'cancellation' as X, but you seem to mean Y — which is it?"_
+- **Sharpen fuzzy language.** When the user uses a vague or overloaded term, propose a precise canonical term and ask which one is meant. _"You're saying 'account' — do you mean the **Customer** or the **User**? Those are different things."_
+- **Update inline.** As soon as a term is settled, write it to `DOMAIN.md`. Don't queue it for later.
+- **Flag conflicts in the doc itself.** When a term was used ambiguously and got resolved, record both the conflict and the resolution under "Flagged ambiguities".

@@ -1,48 +1,44 @@
-# Framing Doc Format
+# Frame Document Format
 
-Five sections, recursively applied at every level. Each level is a self-contained framing scoped to its own concern.
+One document per domain scope. Numbered, slugged, and linked to its parent (when it has one) via frontmatter only.
 
-## Sections
+## Frontmatter
 
-### One-liner
+```yaml
+---
+slug: <kebab-case-slug>
+parent: <relative path to parent frame>   # omit on the root
+---
+```
 
-What this thing is, in one sentence. Concrete action, concrete beneficiary.
+- The root frame (`000-<slug>.md`) has no `parent`.
+- Children reference their parent by relative path:
+  - From `docs/frame/001-pricing.md`, parent is `./000-billing.md`.
+  - From `docs/frame/001-pricing/001-tiers.md`, parent is `../001-pricing.md`.
 
-_Probe:_ refuse vague verbs ("help," "enable," "empower"). Refuse abstract beneficiaries ("teams," "users"). Demand a verb you can mime and a person you could point at.
+## Body
 
-_Bad:_ "An AI-powered platform that empowers teams to ship faster."
-_Good:_ "A weekly digest that tells a solo PM which of her tickets are blocking other people."
+Free prose. No scaffold. Each frame is shaped by its own topic — let the discovery dictate the structure, not the format.
 
-### Problem
+A frame has done its job when it contains, in whatever shape fits:
 
-Who has the pain, what triggers it, why now.
+- the **distilled answer** to "what is this scope" — usually one sentence;
+- the **decisions** that were resolved, with the reasoning behind each — not just the choice;
+- the **unresolved questions** that surfaced but weren't closed inside this scope.
 
-_Probe:_ if there's no triggering event, the problem is probably background noise rather than a real driver. If "why now" can't be answered, ask why this hasn't already been built.
+These are obligations, not sections. Whether they live as headings, prose, or bullets is per-topic. Don't impose a template the topic doesn't earn.
 
-### Mechanism
+## Cross-frame references
 
-What the thing *is*, concretely. The actual moving parts — not the marketing.
+The only link to another frame is `parent:` in the frontmatter. The body **never references** other frames — not parents, not children, not siblings.
 
-_Probe:_ refuse "platform," "system," "solution" without operational detail. Ask what the user clicks, what the system does in response, what gets stored.
+Children are discovered structurally: a frame's children live in the sibling folder named after its slug (`001-pricing.md` → `001-pricing/`). If you need to know what branched off a frame, look at the folder, not the doc.
 
-### Insight
+## Rules
 
-The non-obvious bit that makes this not just another version of the obvious solution.
-
-_Probe:_ refuse insight statements anyone would already agree with. If a competitor would write the same line on their pitch deck, it isn't yours.
-
-### Out-of-scope
-
-What this is *not*. Explicit no-s.
-
-_Probe:_ at the root, scope-out the adjacent obvious extensions someone might assume are included. At sub-topic levels, scope-out *this branch's* concerns from sibling branches'.
-
-## Recursion
-
-Sub-topic anchors use the same five sections, scoped narrower. "Out-of-scope" at a sub-level means what *this* framing doesn't cover, not what the entire idea doesn't cover.
-
-A sub-topic that can't be framed with these five sections hasn't been sharpened enough. Sharpening is the focused session's job.
-
-## Dropping sections
-
-Sections may be dropped when they genuinely don't apply at this level. Resist drops made because a section is hard — that's the section the grill should push hardest on.
+- **One scope per file.** If a sub-topic gains its own decisions, branch it into a child frame.
+- **DOMAIN.md owns vocabulary.** Reference domain terms in **bold** (`**Customer**`). Never redefine them in a frame doc.
+- **Capture reasoning, not just choices.** The choice is recoverable from the file; the reasoning is not.
+- **Edit in place.** The doc is the current state, not a log. Revise sections rather than appending "Update:" notes.
+- **Write only what's crystallized.** No empty headings, no batched end-of-session writes.
+- **Surface contradictions, don't paper over them.** If a later decision contradicts an earlier one, edit both — and note the resolution explicitly if it was load-bearing.
