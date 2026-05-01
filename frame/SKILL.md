@@ -8,7 +8,9 @@ metadata:
 
 # Frame
 
-Distill an idea by resolving the dependencies between decisions, one at a time, until shared understanding is reached. Each domain scope produces its own artifact under `docs/frame/`. A shared glossary, `DOMAIN.md`, captures the language as it stabilizes.
+Distill an idea by resolving the dependencies between decisions, one at a time, until shared understanding is reached. Each domain scope produces its own artifact under `docs/frame/` - one scope/artifact per session. A shared glossary, `DOMAIN.md`, captures the language as it stabilizes.
+
+This is not about specifying, designing or planning a solution. It's about getting to a clear, actionable artifact that can be used as a reference for whatever the next step is — whether that's implementation, design, or further research.
 
 ## Tone
 
