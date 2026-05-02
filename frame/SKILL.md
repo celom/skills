@@ -2,7 +2,7 @@
 name: frame
 description: Crystallize an idea into a handoff-ready artifact through a relentless one-question-at-a-time discovery process. Each scope becomes its own artifact under docs/frame/, with a shared glossary in DOMAIN.md. Use when the user has a thought, idea, or proposal that needs sharpening before it can be specced, prototyped, or iterated on.
 metadata:
-  - based-on: grill-with-docs (Matt Pocock)
+  - inspired-by: grill-with-docs (Matt Pocock)
 ---
 
 # Frame
