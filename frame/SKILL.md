@@ -1,7 +1,6 @@
 ---
 name: frame
 description: Distill an idea through a relentless one-question-at-a-time discovery process. Each scope becomes its own artifact under docs/frame/, with a shared glossary in DOMAIN.md. Use when the user has a thought, idea, or proposal that needs sharpening before it can be acted on.
-disable-model-invocation: true
 metadata:
   - based-on: grill-with-docs (Matt Pocock)
 ---
@@ -12,17 +11,26 @@ Distill an idea by resolving the dependencies between decisions, one at a time, 
 
 This is not about specifying, designing or planning a solution. It's about getting to a clear, actionable artifact that can be used as a reference for whatever the next step is — whether that's implementation, design, or further research.
 
+This is also not about scheduling or project management. It's about the content of the idea, not the logistics of how to get it done. No timelines, no milestones, no assignments. Just the idea itself, sharpened and crystallized.
+
 ## Tone
 
-Skeptical editor. Do not validate or soften.
+Dialectical Skeptical. Do not validate or soften.
 
-The goal is to get to a clear, actionable artifact. Nonetheless, the process is conversational. The user is a partner in discovery, not a subject to be interrogated. The tone should be firm but collaborative.
+The goal is to get to a clear, actionable artifact via a conversational process. The user is a partner in discovery. The tone should be firm but collaborative.
 
 - No "great starting point", no "interesting direction", no "good question".
 - If something is unclear, say it's unclear.
-- If two things the user said contradict, call it out.
+- If two things the user said contradict, point it out.
 - Push back on fuzzy or overloaded terms. Propose a precise canonical term and force the user to pick.
 - When the user uses a term that conflicts with `DOMAIN.md`, call it out before letting the conversation move on.
+
+## Setup
+
+Don't raise any tensions at this point. Just gather information and get a sense of the landscape. The goal is to understand the user's perspective and the context of the idea, not to critique it.
+
+1. Frame the topic. Write back what the user said in your own words, and ask for confirmation.
+2. Ask the user if they have existing features or requirements in mind. If so, ask them to list them out. If not, ask them to describe the problem or opportunity in more detail.
 
 ## Process
 
@@ -38,15 +46,15 @@ The goal is to get to a clear, actionable artifact. Nonetheless, the process is 
 ```
 docs/frame/
 ├── DOMAIN.md
-├── 000-<root-slug>.md
-├── 001-<child-slug>.md
-├── 001-<child-slug>/          ← only created when 001 itself spawns children
-│   ├── 001-<grandchild>.md
-│   └── 002-<grandchild>.md
-└── 002-<other-child>.md
+├── 00-<root-slug>.md
+├── 01-<child-slug>.md
+├── 01-<child-slug>/          ← only created when 01 itself spawns children
+│   ├── 01-<grandchild>.md
+│   └── 02-<grandchild>.md
+└── 02-<other-child>.md
 ```
 
-- Numbering is zero-padded and scoped to each level. Root is `000-`. Direct children of the root start at `001-`. Each subfolder restarts at `001-`.
+- Numbering is zero-padded and scoped to each level. Root is `00-`. Direct children of the root start at `01-`. Each subfolder restarts at `01-`.
 - A frame doc gains children by creating a sibling folder with the same slug. The original `.md` stays put; children live in the folder next to it.
 - Slug is kebab-case, derived from the resolved one-liner. Propose, confirm, then create.
 - See [FRAMING-FORMAT.md](./FRAMING-FORMAT.md) for the per-document format.
