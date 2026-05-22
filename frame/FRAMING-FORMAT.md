@@ -18,7 +18,7 @@ parent: <relative path to parent frame>   # omit on the root
 
 ## Body
 
-Free prose. No scaffold. Each frame is shaped by its own topic — let the discovery dictate the structure, not the format.
+Free prose, but concise. No scaffold. Each frame is shaped by its own topic — let the discovery dictate the structure, not the format.
 
 A frame has done its job when it contains, in whatever shape fits:
 
