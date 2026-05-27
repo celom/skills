@@ -16,6 +16,10 @@ parent: <relative path to parent frame>   # omit on the root
   - From `docs/frame/01-pricing.md`, parent is `./00-billing.md`.
   - From `docs/frame/01-pricing/01-tiers.md`, parent is `../01-pricing.md`.
 
+## Style
+
+USE a functional/utilitarian style - focus on clarity and brevity, not flowery language. Avoid unnecessary words or embellishments.
+
 ## Body
 
 Free prose, but concise. No scaffold. Each frame is shaped by its own topic — let the discovery dictate the structure, not the format.
