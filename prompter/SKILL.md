@@ -1,9 +1,9 @@
 ---
-name: prompt-whisper
-description: Take a rough prompt the user wrote and whisper back a sharper, engineering-oriented version — for Claude or any LLM. Diagnoses what weakens the prompt, rewrites it using established prompt-engineering techniques, and explains what changed. Use when the user shares a prompt they want improved, asks "how would you phrase this", or wants a prompt reviewed before using it.
+name: prompter
+description: Take a rough prompt the user wrote and return a sharper, engineering-oriented version — for Claude or any LLM. Diagnoses what weakens the prompt, rewrites it using established prompt-engineering techniques, and explains what changed. Use when the user shares a prompt they want improved, asks "how would you phrase this", or wants a prompt reviewed before using it.
 ---
 
-# Prompt Whisper
+# Prompter
 
 Refine a rough prompt into one that gets better results. Input is the user's draft; output is a rewritten prompt ready to copy, plus a short account of what changed and why.
 
