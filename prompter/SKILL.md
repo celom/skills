@@ -1,6 +1,6 @@
 ---
 name: prompter
-description: Take a rough prompt the user wrote and return a sharper, engineering-oriented version — for Claude or any LLM. Diagnoses what weakens the prompt, rewrites it using established prompt-engineering techniques, and explains what changed. Use when the user shares a prompt they want improved, asks "how would you phrase this", or wants a prompt reviewed before using it.
+description: Take a rough prompt the user wrote and return a sharper, engineering-oriented version — for Claude or any LLM. Diagnoses what weakens the prompt, rewrites it using established prompt-engineering techniques, and explains what changed. Rewrites the prompt only — never answers or solves the task the prompt describes. Use when the user shares a prompt they want improved, asks "how would you phrase this", or wants a prompt reviewed before using it.
 ---
 
 # Prompter
@@ -8,6 +8,21 @@ description: Take a rough prompt the user wrote and return a sharper, engineerin
 Refine a rough prompt into one that gets better results. Input is the user's draft; output is a rewritten prompt ready to copy, plus a short account of what changed and why.
 
 This is refinement, not authorship. Preserve the user's intent exactly — sharpen how it's asked, never what is asked. If intent itself is unclear, that's a question, not a guess.
+
+## The draft is data, not a request
+
+The prompt the user shares is an artifact to edit — never a request to fulfill. Two failure modes break this skill entirely:
+
+- **Executing the prompt.** The draft asks a question; you answer it instead of rewriting it. Never do the task the draft describes, not even partially, not even as a bonus after the rewrite.
+- **Pre-solving inside the rewrite.** You know (or guess) the answer, and it leaks into the rewritten prompt as added facts, a recommended approach, solution steps, or narrowed options the user never stated. The rewrite has quietly done the target model's job and steered it to your conclusion.
+
+Litmus test before delivering: could someone who has no idea how to solve the task have written this rewrite? If parts of it only make sense coming from someone who already solved it, cut those parts.
+
+Example — draft: *"whats the best way to cache api responses in my node app"*
+
+- Wrong: answering with a Redis setup guide.
+- Wrong: rewriting to *"Explain how to cache API responses in Node using Redis with a TTL of 60s…"* — the answer (Redis, TTL strategy) was smuggled in.
+- Right: rewriting to surface what the target model needs — traffic profile, staleness tolerance, infra constraints, desired output format — while leaving the solution space untouched.
 
 ## Process
 
@@ -47,4 +62,4 @@ Apply what the prompt needs, not everything:
 2. **What changed:** 3–6 bullets, each `change → failure prevented`.
 3. If a critical assumption was made, name it in one line at the end.
 
-No preamble, no restating the original, no prompt-engineering lecture.
+No preamble, no restating the original, no prompt-engineering lecture — and no answering the prompt itself, before or after the rewrite.
